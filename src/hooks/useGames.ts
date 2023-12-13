@@ -26,6 +26,7 @@ const useGames = () => {
     const [games, setGames] = useState<Game[]>([]);
     const [error, setError] = useState("");
     const [isLoading, setLoading] = useState(false);
+<<<<<<< HEAD
   
     useEffect(() => {
         const controller = new AbortController()
@@ -45,6 +46,27 @@ const useGames = () => {
           
           });
 
+=======
+   
+    setLoading(true)
+    useEffect(() => {
+        const controller = new AbortController()
+
+      
+        setLoading(true)
+        apiClient
+        .get<FetchGamesResponse>("/games", {signal: controller.signal})
+        .then((res) => {
+          setGames(res.data.results);
+          setLoading(false)
+        })
+        .catch((err) => {
+            if (err instanceof CanceledError) return
+            setError(err.message)
+            setLoading(false)
+          
+          });
+>>>>>>> refs/remotes/origin/main
 
     return () => controller.abort();
     }, []);
